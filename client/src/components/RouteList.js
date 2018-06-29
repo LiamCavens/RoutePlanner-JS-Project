@@ -1,28 +1,17 @@
 import React, {Component} from 'react';
-
+import SingleRoute from './SingleRoute.js'
 
 
 export default class RouteList extends Component {
 
-  constructor(props){
-    super(props);
-    this.state= {
-      routes: []
-    }
-  }
-
-
-  componentDidMount(){
-    const url = "/api/routes";
-    fetch(url).then(res => res.json()).then(routes => this.setState({
-      routes: routes
-      console.log(this.state);
-    }));
-  }
-
   render(){
-    return(
-      // <Route quotes={this.state.routes} />
-    )
+      const routes = this.props.routes.map( route => (
+      <li key={route._id}><SingleRoute route={route} /></li>
+      ))
+      return(
+        <ul>
+          {routes}
+        </ul>
+      )
   }
-};
+}
