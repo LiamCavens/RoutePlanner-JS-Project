@@ -65,7 +65,7 @@ db.routes.insert([
 },
  { name: "Stirling to Skye",
   startPoint:["56.1165", "3.9369"],
-  endPoint: ["57.5359", "6.2263"],
+  endPoint: ["57.5359", "6.2263"], 
   description: "For many people a trip to Skye will be on their itinerary and the A82 is the most popular route from the south.  If you’re coming from Glasgow the A82 takes you up the western shores of Loch Lomond, a road which is narrow and windy in places, but from Edinburgh the best way to come is from Stirling on the A85.",
   photo: "https://wildaboutscotland.files.wordpress.com/2014/05/img_3754.jpg?w=1348&h=1022",
   difficulty: "1",
