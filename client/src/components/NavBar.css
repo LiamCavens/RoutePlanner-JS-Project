@@ -1,0 +1,39 @@
+#navbar {
+    width: 100vw;
+    background-color: dodgerblue;
+    margin: 0;
+    border-bottom: 1px solid dodgerblue;
+}
+
+h1 {
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+li {
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    margin: 0;
+    padding: 14px 16px 0 16px;
+    border: 1px solid dodgerblue;
+}
+
+li a {
+    border-radius: 8% 8% 0% 0%;
+    text-decoration: none;
+    background-color: whitesmoke;
+    padding: 14px 24px;
+    margin: 0;
+    box-shadow: 2px 2px 2px rgb(0, 0, 0, 0.3);
+}
