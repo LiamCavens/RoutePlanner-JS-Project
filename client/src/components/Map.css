@@ -1,5 +1,16 @@
 #map {
-  width: 600px;
+  width: 800px;
   height: 475px;
-  border: 1px solid black;
+  border: 2.5px solid black;
+}
+
+
+.leaflet-routing-container, .leaflet-routing-error {
+    width: 250px;
+    height: 200px;
+    background-color: white;
+    padding-top: 4px;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    overflow: scroll;
 }
