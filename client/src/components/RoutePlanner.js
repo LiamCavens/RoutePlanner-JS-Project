@@ -19,7 +19,8 @@ export default class RoutePlanner extends Component {
     this.state= {
       routes: [],
       been_routed: false,
-      routing: ''
+      routing: '',
+      marker: []
     }
     let been_routed = false;
     this.MapWrapper = this.MapWrapper.bind(this)
@@ -33,20 +34,19 @@ export default class RoutePlanner extends Component {
   };
 
   addMarker = function (coords, text) {
-    let marker = L.marker(coords).addTo(this.map);
-    marker.bindPopup(text).openPopup()
+    if (this.state.marker !== []) {
+      this.map.removeLayer(this.state.marker);
+      }
+   this.state.marker = L.marker(coords).addTo(this.map);
+    this.state.marker.bindPopup(text).openPopup()
   };
 
 
   newRoute = function(startCoords, endCoords, method, startTown, endTown){
 
     if(this.state.been_routed === true){
-
-       this.state.routing.spliceWaypoints(0, 2);}
-
-  
+    this.state.routing.spliceWaypoints(0, 2);}
      this.state.routing = L.Routing.control({
-
       router: new L.Routing.GraphHopper('3eff14d7-7b89-4050-98ef-f0d72edb928e', {
         urlParameters: {
           vehicle: method
@@ -60,7 +60,6 @@ export default class RoutePlanner extends Component {
       this.addMarker(startCoords, startTown);
       this.addMarker(endCoords, endTown);
      this.state.been_routed = true;
-
     }
 
   MapWrapper = function () {
@@ -69,6 +68,7 @@ export default class RoutePlanner extends Component {
                  .addLayer(osmLayer)
                  .setView([55.9533, -3.1883], 5);
                  this.addMarker([55.9533, -3.1883], "Edinburgh Scotland's capital")
+                 this.state.markers = [55.9533, -3.1883];
 
     }
 
