@@ -1,5 +1,6 @@
 #navbar {
     width: 100vw;
+    height: 15vh;
     background-color: dodgerblue;
     margin: 0;
     border-bottom: 1px solid dodgerblue;
@@ -7,6 +8,8 @@
 
 h1 {
     text-align: center;
+    margin: 0;
+    padding: 15px 0 0 0;
 }
 
 ul {
