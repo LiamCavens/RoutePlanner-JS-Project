@@ -20,13 +20,20 @@ export default class RoutePlanner extends Component {
       routes: [],
       been_routed: false,
       routing: '',
-      marker: []
+      marker: [],
+      startTown:'',
+      endTown:'',
+      startLatLong: [],
+      endLatLong: []
     }
     let been_routed = false;
     this.MapWrapper = this.MapWrapper.bind(this)
     this.flyTo = this.flyTo.bind(this)
     this.newRoute = this.newRoute.bind(this)
     this.addMarker = this.addMarker.bind(this)
+    this.handlesubmit = this.handlesubmit.bind(this)
+    this.onStartTownChange = this.onStartTownChange.bind(this)
+    this.onEndTownChange = this.onEndTownChange.bind(this)
 
   }
   flyTo = function (coords) {
@@ -40,6 +47,50 @@ export default class RoutePlanner extends Component {
    this.state.marker = L.marker(coords).addTo(this.map);
     this.state.marker.bindPopup(text).openPopup()
   };
+
+
+
+  handlesubmit = function(event){
+    event.preventDefault()
+    let startPoint = this.state.startTown;
+    let endPoint = this.state.endTown
+
+    let startUrl = `https://geocode.xyz/${startPoint}?json=1`
+    const request = new XMLHttpRequest()
+    request.open("GET", startUrl);
+    request.addEventListener('load', () => {
+      if(request.status !== 200) return;
+      let startTown = JSON.parse(request.response);
+       this.state.startLatLong = [startTown.latt, startTown.longt];
+
+
+    })
+    request.send()
+
+
+    let endUrl = `https://geocode.xyz/${endPoint}?json=1`
+    const request2 = new XMLHttpRequest()
+    request2.open("GET", endUrl);
+    request2.addEventListener('load', () => {
+      if(request2.status !== 200) return;
+      let endTown = JSON.parse(request2.response);
+       this.state.endLatLong = [endTown.latt, endTown.longt];
+    })
+    request2.send()
+
+
+
+    setTimeout(() => {
+      this.newRoute(this.state.startLatLong , this.state.endLatLong, "bike", this.state.startTown, this.state.endTown);
+    }, 2000);
+  }
+
+  onStartTownChange(event) {
+    this.setState({startTown: event.target.value});
+  }
+  onEndTownChange(event) {
+    this.setState({endTown: event.target.value});
+  }
 
 
   newRoute = function(startCoords, endCoords, method, startTown, endTown){
@@ -85,7 +136,13 @@ export default class RoutePlanner extends Component {
       <div route-planner-div>
           <h4>Route Planner</h4>
           <RouteList  newRoute={this.newRoute} routes={this.state.routes} />
+          <form  onSubmit={this.handlesubmit}>
+            <input type="text" placeholder="Start town" value={this.state.startTown} onChange={this.onStartTownChange}/>
+            <input type="text" placeholder="End town" value={this.state.endTown} onChange={this.onEndTownChange}/>
+            <input type="submit" value="New Route"/>
+          </form>
           <div id='map'/>
+
       </div>
     )
   }
