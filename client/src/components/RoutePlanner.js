@@ -17,39 +17,43 @@ export default class RoutePlanner extends Component {
   constructor(props){
     super(props);
     this.state= {
-      routes: []
+      routes: [],
+      been_routed: false,
+      routing: ''
     }
+    let been_routed = false;
     this.MapWrapper = this.MapWrapper.bind(this)
     this.flyTo = this.flyTo.bind(this)
     this.newRoute = this.newRoute.bind(this)
-    this.clearRoutes = this.clearRoutes.bind(this)
+
   }
   flyTo = function (coords) {
       this.map.flyTo([55.8642, -4.2518]);
   };
 
-  clearRoutes = function(){
-  L.Routing.control({
-  router: new L.Routing.GraphHopper('3eff14d7-7b89-4050-98ef-f0d72edb928e', {
-  }),
-  waypoints: [
-  ],
-
-  }).addTo(this.map);}
 
   newRoute = function(startCoords, endCoords, method){
-  L.Routing.control({
-  router: new L.Routing.GraphHopper('3eff14d7-7b89-4050-98ef-f0d72edb928e', {
-     urlParameters: {
-         vehicle: method
-     }}),
-  waypoints: [
-      L.latLng(startCoords),
-      L.latLng(endCoords)
-  ],
-  routeWhileDragging: true
-}).addTo(this.map);}
 
+    if(this.state.been_routed === true){
+        console.log("hi");
+       this.state.routing.spliceWaypoints(0, 2);}
+
+
+     this.state.routing = L.Routing.control({
+
+      router: new L.Routing.GraphHopper('3eff14d7-7b89-4050-98ef-f0d72edb928e', {
+        urlParameters: {
+          vehicle: method
+        }}),
+        waypoints: [
+          L.latLng(startCoords),
+          L.latLng(endCoords)
+        ],
+        routeWhileDragging: true
+      }).addTo(this.map);
+     this.state.been_routed = true;
+
+    }
 
   MapWrapper = function () {
     const osmLayer = new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
@@ -57,7 +61,7 @@ export default class RoutePlanner extends Component {
                  .addLayer(osmLayer)
                  .setView([0, 0], 5);
 
-}
+    }
 
   componentDidMount(){
     const url = "/api/routes";
@@ -65,7 +69,6 @@ export default class RoutePlanner extends Component {
       routes: routes
     }));
     this.MapWrapper()
-    this.clearRoutes()
   }
   render(){
     return(
