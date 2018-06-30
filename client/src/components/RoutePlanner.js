@@ -22,10 +22,21 @@ export default class RoutePlanner extends Component {
     this.MapWrapper = this.MapWrapper.bind(this)
     this.flyTo = this.flyTo.bind(this)
     this.newRoute = this.newRoute.bind(this)
+    this.clearRoutes = this.clearRoutes.bind(this)
   }
   flyTo = function (coords) {
       this.map.flyTo([55.8642, -4.2518]);
   };
+
+  clearRoutes = function(){
+  L.Routing.control({
+  router: new L.Routing.GraphHopper('3eff14d7-7b89-4050-98ef-f0d72edb928e', {
+  }),
+  waypoints: [
+  ],
+
+  }).addTo(this.map);}
+
   newRoute = function(startCoords, endCoords, method){
   L.Routing.control({
   router: new L.Routing.GraphHopper('3eff14d7-7b89-4050-98ef-f0d72edb928e', {
@@ -45,19 +56,6 @@ export default class RoutePlanner extends Component {
    this.map  = L.map('map')
                  .addLayer(osmLayer)
                  .setView([0, 0], 5);
-     L.Routing.control({
-     router: new L.Routing.GraphHopper('3eff14d7-7b89-4050-98ef-f0d72edb928e', {
-        urlParameters: {
-            vehicle: 'foot'
-        }}),
-     waypoints: [
-         L.latLng(55.8642, -4.2518),
-         L.latLng(56.8198, -5.1052)
-     ],
-     routeWhileDragging: true
-   }).addTo(this.map);
-
-
 
 }
 
@@ -67,15 +65,16 @@ export default class RoutePlanner extends Component {
       routes: routes
     }));
     this.MapWrapper()
+    this.clearRoutes()
   }
   render(){
     return(
       <div route-planner-div>
           <h4>Route Planner</h4>
-          <RouteList  routes={this.state.routes} />
+          <RouteList  newRoute={this.newRoute} routes={this.state.routes} />
           <div id='map'/>
-          <button onClick={() => {this.newRoute([55.9411, -4.318 ],[56.8198, -5.1052], 'foot')}}>New Route</button>
       </div>
     )
   }
 };
+{/* <Child doSomething={() => this.callMe()} /> */}
