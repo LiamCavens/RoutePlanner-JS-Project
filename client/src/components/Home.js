@@ -1,10 +1,11 @@
 import React from "react";
 import CollageBox from "./CollageBox";
+import './Home.css';
 
 const Home = () => (
     <div>
-        <h4>Home</h4>
-        <p>Welcome to visit scotland chaps and female chaps</p>
+        <h4 id='home-header'>Home</h4>
+        
         <CollageBox />
     </div>
 );
