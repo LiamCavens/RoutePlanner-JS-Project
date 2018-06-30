@@ -21,26 +21,42 @@ export default class RoutePlanner extends Component {
     }
     this.MapWrapper = this.MapWrapper.bind(this)
     this.flyTo = this.flyTo.bind(this)
+    this.newRoute = this.newRoute.bind(this)
   }
   flyTo = function (coords) {
-      this.map.flyTo([55.8642, 4.2518]);
+      this.map.flyTo([55.8642, -4.2518]);
   };
+  newRoute = function(startCoords, endCoords, method){
+  L.Routing.control({
+  router: new L.Routing.GraphHopper('3eff14d7-7b89-4050-98ef-f0d72edb928e', {
+     urlParameters: {
+         vehicle: method
+     }}),
+  waypoints: [
+      L.latLng(startCoords),
+      L.latLng(endCoords)
+  ],
+  routeWhileDragging: true
+}).addTo(this.map);}
 
-  MapWrapper = function (coords, zoom) {
+
+  MapWrapper = function () {
     const osmLayer = new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
    this.map  = L.map('map')
                  .addLayer(osmLayer)
                  .setView([0, 0], 5);
      L.Routing.control({
-     router: new L.Routing.GraphHopper('3eff14d7-7b89-4050-98ef-f0d72edb928e'),
+     router: new L.Routing.GraphHopper('3eff14d7-7b89-4050-98ef-f0d72edb928e', {
+        urlParameters: {
+            vehicle: 'foot'
+        }}),
      waypoints: [
-         L.latLng(57.74, 11.94),
-         L.latLng(57.6792, 11.949)
+         L.latLng(55.8642, -4.2518),
+         L.latLng(56.8198, -5.1052)
      ],
      routeWhileDragging: true
    }).addTo(this.map);
 
-  
 
 
 }
@@ -56,9 +72,9 @@ export default class RoutePlanner extends Component {
     return(
       <div route-planner-div>
           <h4>Route Planner</h4>
-          <RouteList routes={this.state.routes} />
+          <RouteList  routes={this.state.routes} />
           <div id='map'/>
-          <button onClick={this.flyTo}>Fly to Glasgow</button>
+          <button onClick={() => {this.newRoute([55.9411, -4.318 ],[56.8198, -5.1052], 'foot')}}>New Route</button>
       </div>
     )
   }
