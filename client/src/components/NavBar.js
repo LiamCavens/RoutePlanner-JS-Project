@@ -4,7 +4,7 @@ import './NavBar.css';
 
 const NavBar = () => (
   <div id="navbar">
-    <h1>Visit Scotland</h1>
+    <h1 id='navbar-header'>Visit Scotland</h1>
     <ul>
       <li>
         <Link to="/">Home</Link>

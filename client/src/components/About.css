@@ -1,0 +1,29 @@
+#about-header {
+    font-family: 'IM Fell English SC', serif;
+    text-align: center;
+    font-size: 50px;
+}
+
+#about-sub-head {
+    font-size: 30px;
+    font-family: 'IM Fell English SC', serif;
+    text-align: center;
+}
+
+#about-container {
+    text-align: center;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+}
+
+#about-video {
+    width: 70vw;
+    height: 55vh;
+    padding: 0 15vw;
+}
+
+#message-about {
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+}
