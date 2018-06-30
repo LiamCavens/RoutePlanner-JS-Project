@@ -25,20 +25,26 @@ export default class RoutePlanner extends Component {
     this.MapWrapper = this.MapWrapper.bind(this)
     this.flyTo = this.flyTo.bind(this)
     this.newRoute = this.newRoute.bind(this)
+    this.addMarker = this.addMarker.bind(this)
 
   }
   flyTo = function (coords) {
       this.map.flyTo([55.8642, -4.2518]);
   };
 
+  addMarker = function (coords, text) {
+    let marker = L.marker(coords).addTo(this.map);
+    marker.bindPopup(text).openPopup()
+  };
 
-  newRoute = function(startCoords, endCoords, method){
+
+  newRoute = function(startCoords, endCoords, method, startTown, endTown){
 
     if(this.state.been_routed === true){
-        console.log("hi");
+
        this.state.routing.spliceWaypoints(0, 2);}
 
-
+  
      this.state.routing = L.Routing.control({
 
       router: new L.Routing.GraphHopper('3eff14d7-7b89-4050-98ef-f0d72edb928e', {
@@ -51,6 +57,8 @@ export default class RoutePlanner extends Component {
         ],
         routeWhileDragging: true
       }).addTo(this.map);
+      this.addMarker(startCoords, startTown);
+      this.addMarker(endCoords, endTown);
      this.state.been_routed = true;
 
     }
@@ -59,9 +67,11 @@ export default class RoutePlanner extends Component {
     const osmLayer = new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
    this.map  = L.map('map')
                  .addLayer(osmLayer)
-                 .setView([0, 0], 5);
+                 .setView([55.9533, -3.1883], 5);
+                 this.addMarker([55.9533, -3.1883], "Edinburgh Scotland's capital")
 
     }
+
 
   componentDidMount(){
     const url = "/api/routes";
@@ -80,4 +90,3 @@ export default class RoutePlanner extends Component {
     )
   }
 };
-{/* <Child doSomething={() => this.callMe()} /> */}
