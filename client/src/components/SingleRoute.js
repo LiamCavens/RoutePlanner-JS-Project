@@ -6,7 +6,7 @@ const SingleRoute = ({route}) =>{
       <h3 className="route-name">{route.name}</h3>
       <p>{route.duration}</p>
       <p>{route.distance}</p>
-      <p>{route.travelMethod}</p>
+    
 
     </div>
   )
