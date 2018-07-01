@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import RouteList from './RouteList'
+import RouteList from './RouteList';
+import UserList from './UserList';
 import L from 'leaflet';
 import './Map.css';
 import './route-planner.css'
@@ -18,6 +19,7 @@ export default class RoutePlanner extends Component {
     super(props);
     this.state= {
       routes: [],
+      users: [],
       been_routed: false,
       routing: '',
       marker: [],
@@ -142,6 +144,12 @@ export default class RoutePlanner extends Component {
     fetch(url).then(res => res.json()).then(routes => this.setState({
       routes: routes
     }));
+    const userUrl = "/api/users";
+    fetch(userUrl).then(res => res.json()).then(users => this.setState({
+      users: users
+    }));
+    setTimeout(() =>{console.log(this.state.users)}, 2000)
+
     this.MapWrapper()
   }
   render(){
@@ -149,6 +157,7 @@ export default class RoutePlanner extends Component {
       <div route-planner-div>
           <h4>Route Planner</h4>
           <RouteList  newRoute={this.newRoute} routes={this.state.routes} />
+          <UserList users={this.state.users}/>
           <form  onSubmit={this.handlesubmit}>
             <input type="text" placeholder="Start town" value={this.state.startTown} onChange={this.onStartTownChange}/>
             <input type="text" placeholder="End town" value={this.state.endTown} onChange={this.onEndTownChange}/>
