@@ -2,6 +2,23 @@ use routesDB;
 
 db.routes.remove({});
 
+db.users.remove({});
+
+db.users.insert([
+  {
+  name: "Paul",
+  routes: []
+  },
+  {
+  name: "Dragon",
+  routes: []
+  },
+  {
+  name: "Callum",
+  routes: []
+  },
+])
+
 db.routes.insert([
   { name: "West Highland way",
    startPoint:[55.9411,-4.318 ],

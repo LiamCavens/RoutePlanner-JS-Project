@@ -24,6 +24,14 @@ MongoClient.connect(
       });
     });
 
+    app.get("/api/users", (req, res, next) => {
+      const routesCollection = db.collection("users");
+      routesCollection.find().toArray((err, users) => {
+        if (err) next(err);
+        res.json(users);
+      });
+    });
+
     app.post("/api/routes", (req, res, next) => {
       const routesCollection = db.collection("routes");
       console.log(req.body);
