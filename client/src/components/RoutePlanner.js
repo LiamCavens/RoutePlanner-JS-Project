@@ -21,6 +21,7 @@ export default class RoutePlanner extends Component {
       been_routed: false,
       routing: '',
       marker: [],
+      marker2: [],
       startTown:'',
       endTown:'',
       startLatLong: [],
@@ -40,13 +41,22 @@ export default class RoutePlanner extends Component {
       this.map.flyTo([55.8642, -4.2518]);
   };
 
-  addMarker = function (coords, text) {
+  addMarker = function (coords, text, markerToChange) {
+    if(markerToChange === "marker"){
     if (this.state.marker !== []) {
       this.map.removeLayer(this.state.marker);
       }
-   this.state.marker = L.marker(coords).addTo(this.map);
-    this.state.marker.bindPopup(text).openPopup()
-  };
+   this.setState({marker: L.marker(coords).addTo(this.map)
+    .bindPopup(text, { autoClose: false }).openPopup()})
+  }
+    if(markerToChange === "marker2"){
+    if (this.state.marker2 !== []) {
+      this.map.removeLayer(this.state.marker2);
+      }
+   this.setState({marker2: L.marker(coords).addTo(this.map)
+    .bindPopup(text, { autoClose: false }).openPopup()})
+  }
+}
 
 
 
@@ -109,8 +119,9 @@ export default class RoutePlanner extends Component {
         ],
         routeWhileDragging: true
       }).addTo(this.map);
-      this.addMarker(startCoords, startTown);
-      this.addMarker(endCoords, endTown);
+      this.addMarker(startCoords, startTown, "marker");
+      this.addMarker(endCoords, endTown, "marker2");
+
      this.state.been_routed = true;
     }
 
@@ -119,8 +130,8 @@ export default class RoutePlanner extends Component {
    this.map  = L.map('map')
                  .addLayer(osmLayer)
                  .setView([55.9533, -3.1883], 5);
-                 this.addMarker([55.9533, -3.1883], "Edinburgh Scotland's capital")
-                 this.state.markers = [55.9533, -3.1883];
+                 this.addMarker([55.9533, -3.1883], "Edinburgh Scotland's capital", "marker")
+
 
     }
 
