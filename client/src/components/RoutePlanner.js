@@ -96,7 +96,8 @@ export default class RoutePlanner extends Component {
   newRoute = function(startCoords, endCoords, method, startTown, endTown){
 
     if(this.state.been_routed === true){
-    this.state.routing.spliceWaypoints(0, 2);}
+    this.state.routing.spliceWaypoints(0, 2);
+    this.map.removeControl(this.state.routing)}
      this.state.routing = L.Routing.control({
       router: new L.Routing.GraphHopper('3eff14d7-7b89-4050-98ef-f0d72edb928e', {
         urlParameters: {

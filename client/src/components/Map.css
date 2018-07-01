@@ -142,7 +142,7 @@
 }
 
 .leaflet-routing-geocoders input,.leaflet-routing-remove-waypoint,.leaflet-routing-geocoder {
-    position: relative;
+    position:;
 }
 
 .leaflet-routing-geocoder-result {
