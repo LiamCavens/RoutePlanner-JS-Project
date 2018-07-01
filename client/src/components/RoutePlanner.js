@@ -65,7 +65,7 @@ export default class RoutePlanner extends Component {
     let startPoint = this.state.startTown;
     let endPoint = this.state.endTown
 
-    let startUrl = `https://geocode.xyz/${startPoint}?json=1`
+    let startUrl = `https://geocode.xyz/${startPoint}-uk?json=1`
     const request = new XMLHttpRequest()
     request.open("GET", startUrl);
     request.addEventListener('load', () => {
@@ -78,7 +78,8 @@ export default class RoutePlanner extends Component {
     request.send()
 
 
-    let endUrl = `https://geocode.xyz/${endPoint}?json=1`
+    let endUrl = `https://geocode.xyz/${endPoint}-uk?json=1`
+    console.log(endUrl);
     const request2 = new XMLHttpRequest()
     request2.open("GET", endUrl);
     request2.addEventListener('load', () => {
@@ -91,7 +92,7 @@ export default class RoutePlanner extends Component {
 
 
     setTimeout(() => {
-      this.newRoute(this.state.startLatLong , this.state.endLatLong, "bike", this.state.startTown, this.state.endTown);
+      this.newRoute(this.state.startLatLong , this.state.endLatLong, "car", this.state.startTown, this.state.endTown);
     }, 2000);
   }
 
