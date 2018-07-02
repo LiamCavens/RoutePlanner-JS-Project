@@ -14,7 +14,7 @@ h1 {
     font-family: 'IM Fell English SC', serif;
 }
 
-ul {
+#nav-bar-list {
     list-style-type: none;
     display: flex;
     flex-direction: row;
