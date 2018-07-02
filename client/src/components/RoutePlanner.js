@@ -20,6 +20,7 @@ export default class RoutePlanner extends Component {
     this.state= {
       routes: [],
       apiUsers: [],
+      user: "",
       been_routed: false,
       routing: '',
       marker: [],
@@ -27,7 +28,9 @@ export default class RoutePlanner extends Component {
       startTown:'',
       endTown:'',
       startLatLong: [],
-      endLatLong: []
+      endLatLong: [],
+      method: "",
+      usersRoute: "glasgow"
     }
 
     this.MapWrapper = this.MapWrapper.bind(this)
@@ -37,6 +40,9 @@ export default class RoutePlanner extends Component {
     this.onStartTownChange = this.onStartTownChange.bind(this)
     this.onEndTownChange = this.onEndTownChange.bind(this)
     this.onTravelMethodChange = this.onTravelMethodChange.bind(this)
+    this.handleSaveRoute = this.handleSaveRoute.bind(this)
+    this.updateUser = this.updateUser.bind(this)
+    this.SearchForUser = this.SearchForUser.bind(this)
 
   }
 
@@ -57,6 +63,26 @@ export default class RoutePlanner extends Component {
     }
   }
 
+    updateUser = (event) => {
+      event.preventDefault()
+      this.setState({user: event.target.value})
+
+    }
+
+    SearchForUser = (event) => {
+      event.preventDefault()
+
+
+      let component = this;
+      this.state.apiUsers.forEach(function(userToSearch){
+
+        if(userToSearch.name === component.state.user){
+            component.setState({user: userToSearch})
+
+        }
+      })
+
+      }
 
 
   handleSearchSubmit = function(event){
@@ -89,7 +115,7 @@ export default class RoutePlanner extends Component {
     setTimeout(() => {
       console.log(this.newRoute);
       this.newRoute(this.state.startLatLong , this.state.endLatLong, this.state.method, this.state.startTown, this.state.endTown);
-    }, 2000);
+    }, 6000);
   }
 
   onStartTownChange(event) {
@@ -102,6 +128,20 @@ export default class RoutePlanner extends Component {
 
     console.log(event.target.value);
     this.setState({method: event.target.value})
+  }
+
+  handleSaveRoute = (event) => {
+    event.preventDefault()
+    console.log(event.target.value);
+    this.state.user.routes.push(this.state.usersRoute);
+    const request = new XMLHttpRequest();
+    request.open("PUT", "http://localhost:3001/api/users");
+    request.setRequestHeader("content-type", "application/json")
+    request.addEventListener("load", function(){
+      if(this.status !== 201) return;
+      const responseBody = JSON.parse(this.response);
+    })
+    request.send(JSON.stringify(this.state.user));
   }
 
 
@@ -126,6 +166,8 @@ export default class RoutePlanner extends Component {
       this.addMarker(endCoords, endTown, "marker2");
 
      this.state.been_routed = true;
+     this.setState({usersRoute: {name: `${this.state.startTown} to ${this.state.endTown}`, completed: "Not completed"}})
+
     }
 
   MapWrapper = function () {
@@ -170,13 +212,13 @@ export default class RoutePlanner extends Component {
         <div id="map-box">
           <div id='form-box'>
             <select onChange={this.onTravelMethodChange}>
-              <option value="foot" onclick={this.onTravelMethodChange}>
+              <option value="foot" onClick={this.onTravelMethodChange}>
                 Walking
               </option>
-              <option value="car" onclick={this.onTravelMethodChange}>
+              <option value="car" onClick={this.onTravelMethodChange}>
                 Driving
               </option>
-              <option value="bike" onclick={this.onTravelMethodChange}>
+              <option value="bike" onClick={this.onTravelMethodChange}>
                 Cycling
               </option>
             </select>
@@ -184,6 +226,15 @@ export default class RoutePlanner extends Component {
               <input type="text" placeholder="Start town" value={this.state.startTown} onChange={this.onStartTownChange} />
               <input type="text" placeholder="End town" value={this.state.endTown} onChange={this.onEndTownChange} />
               <input type="submit" value="New Route" />
+            </form>
+            <form  onSubmit={this.SearchForUser}>
+              <input type="text" placeholder="Username"  onChange={this.updateUser} />
+              <input type="submit" value="Find user"/>
+              </form>
+              <p>{this.state.user.name}</p>
+            <form onSubmit={this.handleSaveRoute}>
+              <input type="text" value={this.state.usersRoute.name}/>
+              <input type="submit" value="Save Route" />
             </form>
           </div>
 
