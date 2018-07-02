@@ -6,7 +6,7 @@ import './Map.css';
 import './route-planner.css'
 // import Routing from 'leaflet-routing-machine';
 // import {MapLayer} from 'react-leaflet';
-require('os-leaflet'); 
+require('os-leaflet');
 
 
 require('leaflet-routing-machine');
@@ -19,7 +19,7 @@ export default class RoutePlanner extends Component {
     super(props);
     this.state= {
       routes: [],
-      users: [],
+      apiUsers: [],
       been_routed: false,
       routing: '',
       marker: [],
@@ -138,10 +138,18 @@ export default class RoutePlanner extends Component {
     }
 
   componentDidMount(){
-    const url = "/api/routes";
-    fetch(url).then(res => res.json()).then(routes => this.setState({
-      routes: routes
-    }));
+
+
+    const userUrl = "/api/users";
+      fetch(userUrl).then(res => res.json()).then(users => this.setState({
+          apiUsers: users
+        }))
+
+        const url = "/api/routes";
+        fetch(url).then(res => res.json()).then(routes => this.setState({
+          routes: routes
+        }));
+
 
   this.MapWrapper()
   }
@@ -150,9 +158,9 @@ export default class RoutePlanner extends Component {
     return(
 
       <div id='main-route-planner'>
-          
-      
-          <RouteList  newRoute={this.newRoute} routes={this.state.routes} />
+
+
+          <RouteList  newRoute={this.newRoute} routes={this.state.routes} users={this.state.apiUsers}/>
         <div id="map-box">
           <select onChange={this.onTravelMethodChange}>
             <option value="foot" onclick={this.onTravelMethodChange}>Walking</option>
