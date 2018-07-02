@@ -19,7 +19,7 @@ export default class CollageBox extends Component {
     render() {
         return <div id="home-collage-box">
             <div id="route-1" className="home-walk-img">
-              <h4>West Highland way</h4>
+              <h4> <a href="/westHighlandWay">West Highland way</a></h4>
             </div>
             <div id="route-2" className="home-walk-img">
               <h4>The Great Glen Way</h4>

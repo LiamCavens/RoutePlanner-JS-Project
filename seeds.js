@@ -119,7 +119,7 @@ db.routes.insert([
   description: "With the possible exception of some sections of the Ardnamurchan and Arran loops, all of the routes described so far include popular roads where traffic can build up, especially in summer.  However, the route up the far northwest of Scotland covers some of the most spectacular and quietest spots in Scotland.  For many, this is Scotland at its wildest and most scenic, where mountains, lochs and small communities combine to give an experience not found anywhere else in the UK.  This is a journey to savour, to stop off, linger and soak up the experience.",
   photo: "https://wildaboutscotland.files.wordpress.com/2014/05/dsc_0055.jpg?w=1348&h=900",
   difficulty: "1",
-  travelMethod: "hike",
+  travelMethod: "car",
   duration:"2 hours",
   distance:"67 miles"
 }
