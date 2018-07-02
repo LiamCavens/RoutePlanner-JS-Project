@@ -132,11 +132,13 @@ export default class RoutePlanner extends Component {
 
     const cycleLayer = new L.TileLayer("https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png")
     const osmLayer = new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+    const hikeLayer = new L.TileLayer("https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png")
     this.map  = L.map('map')
                  .addLayer(osmLayer)
                  .setView([55.9533, -3.1883], 5);
                  this.addMarker([55.9533, -3.1883], "Edinburgh Scotland's capital", "marker")
                  this.map.addLayer(cycleLayer)
+                 this.map.addLayer(hikeLayer)
     }
 
   componentDidMount(){
