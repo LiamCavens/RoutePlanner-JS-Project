@@ -1,18 +1,16 @@
 import React, {Component} from 'react';
-import User from './User.js'
+import SingleUser from './SingleUser.js'
 
 
 export default class UserList extends Component {
 
   render(){
-      const users = this.props.users.map( user => (
-      <li key={user._id}><User user={user}/>
-      </li>
+      const usersList = this.props.users.map( (user, index) => (
+      <li key={index}><SingleUser user={user}/></li>
       ))
       return(
         <ul>
-          {users}
-
+          {usersList}
         </ul>
       )
   }
