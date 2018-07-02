@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import SingleUser from './SingleUser.js'
+import './User.css'
 
 
 export default class UserList extends Component {
