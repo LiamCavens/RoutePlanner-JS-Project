@@ -13,6 +13,9 @@ const NavBar = () => (
         <Link to="/route-planner">Route Planner</Link>
       </li>
       <li>
+        <Link to="/users">Users</Link>
+      </li>
+      <li>
         <Link to="/about">About</Link>
       </li>
     </ul>

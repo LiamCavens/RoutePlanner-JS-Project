@@ -180,6 +180,7 @@ export default class RoutePlanner extends Component {
 
           <div id="map" />
         </div>
-      </div>;
+      </div>
+    )
   }
 };
