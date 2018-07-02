@@ -7,7 +7,7 @@
 .leaflet-routing-container,
 .leaflet-routing-error {
   width: 320px;
-  background-color: white;
+  background-color: rgb(300, 300, 300, 0.3);
   padding-top: 4px;
   transition: all 0.2s ease;
   box-sizing: border-box;
