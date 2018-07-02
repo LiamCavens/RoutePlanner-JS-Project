@@ -8,9 +8,9 @@ import './route-planner.css'
 // import {MapLayer} from 'react-leaflet';
 require('os-leaflet'); 
 
-require('leaflet-routing-machine');
-require('lrm-graphhopper'); // This will tack on the class to the L.Routing namespace
 
+require('leaflet-routing-machine');
+require('lrm-graphhopper');
 
 
 export default class RoutePlanner extends Component {
@@ -36,9 +36,9 @@ export default class RoutePlanner extends Component {
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this)
     this.onStartTownChange = this.onStartTownChange.bind(this)
     this.onEndTownChange = this.onEndTownChange.bind(this)
+    this.onTravelMethodChange = this.onTravelMethodChange.bind(this)
 
   }
-
 
   addMarker = function (coords, text, markerToChange) {
     if(markerToChange === "marker"){
@@ -87,7 +87,8 @@ export default class RoutePlanner extends Component {
     request2.send()
 
     setTimeout(() => {
-      this.newRoute(this.state.startLatLong , this.state.endLatLong, "car", this.state.startTown, this.state.endTown);
+      console.log(this.newRoute);
+      this.newRoute(this.state.startLatLong , this.state.endLatLong, this.state.method, this.state.startTown, this.state.endTown);
     }, 2000);
   }
 
@@ -97,6 +98,12 @@ export default class RoutePlanner extends Component {
   onEndTownChange(event) {
     this.setState({endTown: event.target.value});
   }
+  onTravelMethodChange(event) {
+
+    console.log(event.target.value);
+    this.setState({method: event.target.value})
+  }
+
 
 
   newRoute = function(startCoords, endCoords, method, startTown, endTown){
@@ -130,31 +137,35 @@ export default class RoutePlanner extends Component {
 
     }
 
-
   componentDidMount(){
     const url = "/api/routes";
     fetch(url).then(res => res.json()).then(routes => this.setState({
       routes: routes
     }));
-    const userUrl = "/api/users";
-    fetch(userUrl).then(res => res.json()).then(users => this.setState({
-      users: users
-    }));
-    setTimeout(() =>{console.log(this.state.users)}, 2000)
-    this.MapWrapper()
+
+  this.MapWrapper()
   }
+
   render(){
     return(
+
       <div id='main-route-planner'>
-          <RouteList newRoute={this.newRoute} routes={this.state.routes} />
           <div id="map-box">
-            <form id="route-form" onSubmit={this.handleSearchSubmit}>
-              <input type="text" placeholder="Start town" value={this.state.startTown} onChange={this.onStartTownChange}/>
-              <input type="text" placeholder="End town" value={this.state.endTown} onChange={this.onEndTownChange}/>
-              <input type="submit" value="Create Your Own"/>
-            </form>
-              <div id='map'/>
-          </div>
+          <RouteList  newRoute={this.newRoute} routes={this.state.routes} />
+          <select onChange={this.onTravelMethodChange}>
+            <option value="foot" onclick={this.onTravelMethodChange}>Walking</option>
+            <option value="car" onclick={this.onTravelMethodChange}>Driving</option>
+            <option value="bike" onclick={this.onTravelMethodChange}>Cycling</option>
+          </select>
+          <form  onSubmit={this.handleSearchSubmit}>
+            <input type="text" placeholder="Start town" value={this.state.startTown} onChange={this.onStartTownChange}/>
+            <input type="text" placeholder="End town" value={this.state.endTown} onChange={this.onEndTownChange}/>
+            <input type="submit" value="New Route"/>
+          </form>
+
+
+          <div id='map'/>
+      </div>
       </div>
     )
   }
