@@ -1,6 +1,13 @@
 const express = require("express");
 const app = express();
 const parser = require("body-parser");
+const ObjectId = require('mongodb').ObjectId
+
+var cors = require('cors')
+
+
+app.options('*', cors())
+app.use(cors())
 
 const port = 3001;
 
@@ -24,14 +31,6 @@ MongoClient.connect(
       });
     });
 
-    app.get("/api/users", (req, res, next) => {
-      const routesCollection = db.collection("users");
-      routesCollection.find().toArray((err, users) => {
-        if (err) next(err);
-        res.json(users);
-      });
-    });
-
     app.post("/api/routes", (req, res, next) => {
       const routesCollection = db.collection("routes");
       console.log(req.body);
@@ -42,6 +41,41 @@ MongoClient.connect(
         res.json(result.ops[0]);
       });
     });
+
+    app.get("/api/users", (req, res, next) => {
+      const routesCollection = db.collection("users");
+      routesCollection.find().toArray((err, users) => {
+        if (err) next(err);
+        res.json(users);
+      });
+    });
+
+
+
+    app.put("/api/users", function(req, res){
+        const userCollection = db.collection('users')
+        const objectId = ObjectId(req.body._id);
+        userCollection.update({_id: objectId},{name: req.body.name,routes:req.body.routes},  function(err, result){
+        if(err) console.log("error" + err);
+        res.status(201);
+        res.json(result);
+
+        });
+      })
+
+      app.post("/api/users", (req, res, next) => {
+          const userCollection = db.collection("users");
+          console.log(req.body);
+          const newUser = req.body;
+          userCollection.update(newUser, (err, result) => {
+            if (err) next(err);
+            res.status(201);
+            res.json(result.ops[0]);
+          });
+        });
+
+
+
 
     app.listen(port, () => {
       console.log("App listening on port", port);
