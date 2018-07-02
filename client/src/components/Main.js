@@ -5,6 +5,7 @@ import Home from './Home';
 import About from './About';
 import RoutePlanner from './RoutePlanner';
 import UserPage from '../containers/UserPage';
+import westHighlandWay from './westHighlandWay'
 
 class Main extends Component {
     constructor(props) {
@@ -24,6 +25,7 @@ class Main extends Component {
                     <Route path='/about' component={About} />
                     <Route path='/users' component={UserPage} />
                     <Route path='/route-planner' component={RoutePlanner} />
+                    <Route path='/west-highland-way' component={westHighlandWay}/>
 
 
                 </React.Fragment>
