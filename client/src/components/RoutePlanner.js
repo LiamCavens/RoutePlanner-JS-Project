@@ -6,7 +6,7 @@ import './Map.css';
 import './route-planner.css'
 // import Routing from 'leaflet-routing-machine';
 // import {MapLayer} from 'react-leaflet';
-require('os-leaflet'); 
+require('os-leaflet');
 
 
 require('leaflet-routing-machine');
@@ -129,12 +129,14 @@ export default class RoutePlanner extends Component {
     }
 
   MapWrapper = function () {
+
+    const cycleLayer = new L.TileLayer("https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png")
     const osmLayer = new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
     this.map  = L.map('map')
                  .addLayer(osmLayer)
                  .setView([55.9533, -3.1883], 5);
                  this.addMarker([55.9533, -3.1883], "Edinburgh Scotland's capital", "marker")
-
+                 this.map.addLayer(cycleLayer)
     }
 
   componentDidMount(){
@@ -150,8 +152,8 @@ export default class RoutePlanner extends Component {
     return(
 
       <div id='main-route-planner'>
-          
-      
+
+
           <RouteList  newRoute={this.newRoute} routes={this.state.routes} />
         <div id="map-box">
           <select onChange={this.onTravelMethodChange}>
