@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import RouteList from './RouteList';
+import UserList from './UserList';
 import L from 'leaflet';
 import './Map.css';
 import './route-planner.css'
 // import Routing from 'leaflet-routing-machine';
 // import {MapLayer} from 'react-leaflet';
-require('os-leaflet');
+require('os-leaflet'); 
 
 require('leaflet-routing-machine');
 require('lrm-graphhopper'); // This will tack on the class to the L.Routing namespace
@@ -18,6 +19,7 @@ export default class RoutePlanner extends Component {
     super(props);
     this.state= {
       routes: [],
+      users: [],
       been_routed: false,
       routing: '',
       marker: [],
@@ -134,21 +136,25 @@ export default class RoutePlanner extends Component {
     fetch(url).then(res => res.json()).then(routes => this.setState({
       routes: routes
     }));
-
+    const userUrl = "/api/users";
+    fetch(userUrl).then(res => res.json()).then(users => this.setState({
+      users: users
+    }));
+    setTimeout(() =>{console.log(this.state.users)}, 2000)
     this.MapWrapper()
   }
   render(){
     return(
-      <div route-planner-div>
-          <h4>Route Planner</h4>
-          <RouteList  newRoute={this.newRoute} routes={this.state.routes} />
-          <form  onSubmit={this.handleSearchSubmit}>
-            <input type="text" placeholder="Start town" value={this.state.startTown} onChange={this.onStartTownChange}/>
-            <input type="text" placeholder="End town" value={this.state.endTown} onChange={this.onEndTownChange}/>
-            <input type="submit" value="New Route"/>
-          </form>
-          <div id='map'/>
-
+      <div id='main-route-planner'>
+          <RouteList newRoute={this.newRoute} routes={this.state.routes} />
+          <div id="map-box">
+            <form id="route-form" onSubmit={this.handleSearchSubmit}>
+              <input type="text" placeholder="Start town" value={this.state.startTown} onChange={this.onStartTownChange}/>
+              <input type="text" placeholder="End town" value={this.state.endTown} onChange={this.onEndTownChange}/>
+              <input type="submit" value="Create Your Own"/>
+            </form>
+              <div id='map'/>
+          </div>
       </div>
     )
   }

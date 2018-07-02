@@ -1,16 +1,27 @@
-.route-div{
+#main-route-planner {
+  padding: 3% 0 0 0;
+  display: flex;
+}
+
+#route-form {
+  padding: 15px;
+  align-self: center;
+}
+
+.route-div {
   overflow: scroll;
   color: black;
   width: 150px;
   height: 180px;
-
-
 }
 
-#map{
-  margin-left: 200px;
-}
-
-li{
+li {
   align-items: flex-end;
+}
+
+#map-box {
+  width: 75vw;
+  float: right;
+  display: flex;
+  flex-direction: column;
 }
