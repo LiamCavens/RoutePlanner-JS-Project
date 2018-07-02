@@ -150,8 +150,10 @@ export default class RoutePlanner extends Component {
     return(
 
       <div id='main-route-planner'>
-          <div id="map-box">
+          
+      
           <RouteList  newRoute={this.newRoute} routes={this.state.routes} />
+        <div id="map-box">
           <select onChange={this.onTravelMethodChange}>
             <option value="foot" onclick={this.onTravelMethodChange}>Walking</option>
             <option value="car" onclick={this.onTravelMethodChange}>Driving</option>
