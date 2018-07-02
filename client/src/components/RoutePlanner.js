@@ -147,28 +147,30 @@ export default class RoutePlanner extends Component {
   }
 
   render(){
-    return(
-
-      <div id='main-route-planner'>
-          
-      
-          <RouteList  newRoute={this.newRoute} routes={this.state.routes} />
+    return <div id="main-route-planner">
+        <RouteList newRoute={this.newRoute} routes={this.state.routes} />
         <div id="map-box">
-          <select onChange={this.onTravelMethodChange}>
-            <option value="foot" onclick={this.onTravelMethodChange}>Walking</option>
-            <option value="car" onclick={this.onTravelMethodChange}>Driving</option>
-            <option value="bike" onclick={this.onTravelMethodChange}>Cycling</option>
-          </select>
-          <form  onSubmit={this.handleSearchSubmit}>
-            <input type="text" placeholder="Start town" value={this.state.startTown} onChange={this.onStartTownChange}/>
-            <input type="text" placeholder="End town" value={this.state.endTown} onChange={this.onEndTownChange}/>
-            <input type="submit" value="New Route"/>
-          </form>
+          <div id='form-box'>
+            <select onChange={this.onTravelMethodChange}>
+              <option value="foot" onclick={this.onTravelMethodChange}>
+                Walking
+              </option>
+              <option value="car" onclick={this.onTravelMethodChange}>
+                Driving
+              </option>
+              <option value="bike" onclick={this.onTravelMethodChange}>
+                Cycling
+              </option>
+            </select>
+            <form onSubmit={this.handleSearchSubmit}>
+              <input type="text" placeholder="Start town" value={this.state.startTown} onChange={this.onStartTownChange} />
+              <input type="text" placeholder="End town" value={this.state.endTown} onChange={this.onEndTownChange} />
+              <input type="submit" value="New Route" />
+            </form>
+          </div>
 
-
-          <div id='map'/>
-      </div>
-      </div>
-    )
+          <div id="map" />
+        </div>
+      </div>;
   }
 };
