@@ -19,7 +19,7 @@ export default class RoutePlanner extends Component {
     super(props);
     this.state= {
       routes: [],
-      users: [],
+      apiUsers: [],
       been_routed: false,
       routing: '',
       marker: [],
@@ -142,37 +142,53 @@ export default class RoutePlanner extends Component {
     }
 
   componentDidMount(){
-    const url = "/api/routes";
-    fetch(url).then(res => res.json()).then(routes => this.setState({
-      routes: routes
-    }));
+
+
+    const userUrl = "/api/users";
+      fetch(userUrl).then(res => res.json()).then(users => this.setState({
+          apiUsers: users
+        }))
+
+        const url = "/api/routes";
+        fetch(url).then(res => res.json()).then(routes => this.setState({
+          routes: routes
+        }));
+
 
   this.MapWrapper()
   }
 
   render(){
     return(
-
       <div id='main-route-planner'>
 
 
-          <RouteList  newRoute={this.newRoute} routes={this.state.routes} />
+
+
+          <RouteList  newRoute={this.newRoute} routes={this.state.routes} users={this.state.apiUsers}/>
+
         <div id="map-box">
-          <select onChange={this.onTravelMethodChange}>
-            <option value="foot" onclick={this.onTravelMethodChange}>Walking</option>
-            <option value="car" onclick={this.onTravelMethodChange}>Driving</option>
-            <option value="bike" onclick={this.onTravelMethodChange}>Cycling</option>
-          </select>
-          <form  onSubmit={this.handleSearchSubmit}>
-            <input type="text" placeholder="Start town" value={this.state.startTown} onChange={this.onStartTownChange}/>
-            <input type="text" placeholder="End town" value={this.state.endTown} onChange={this.onEndTownChange}/>
-            <input type="submit" value="New Route"/>
-          </form>
+          <div id='form-box'>
+            <select onChange={this.onTravelMethodChange}>
+              <option value="foot" onclick={this.onTravelMethodChange}>
+                Walking
+              </option>
+              <option value="car" onclick={this.onTravelMethodChange}>
+                Driving
+              </option>
+              <option value="bike" onclick={this.onTravelMethodChange}>
+                Cycling
+              </option>
+            </select>
+            <form onSubmit={this.handleSearchSubmit}>
+              <input type="text" placeholder="Start town" value={this.state.startTown} onChange={this.onStartTownChange} />
+              <input type="text" placeholder="End town" value={this.state.endTown} onChange={this.onEndTownChange} />
+              <input type="submit" value="New Route" />
+            </form>
+          </div>
 
-
-          <div id='map'/>
-      </div>
-      </div>
-    )
+          <div id="map" />
+        </div>
+      </div>;
   }
 };

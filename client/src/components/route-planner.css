@@ -34,8 +34,14 @@ li {
 }
 
 #map-box {
-  width: 75vw;
+  width: 74vw;
+  padding: 0 1vw 0 0;
   float: right;
   display: flex;
   flex-direction: column;
+}
+
+#form-box {
+  display: flex;
+  justify-content: space-evenly;
 }

@@ -6,3 +6,7 @@
   width: 25vw;
   overflow: scroll;
 }
+
+#username{
+  color: black;
+}
