@@ -29,40 +29,37 @@ export default class RoutePlanner extends Component {
       startLatLong: [],
       endLatLong: []
     }
-    let been_routed = false;
+
     this.MapWrapper = this.MapWrapper.bind(this)
-    this.flyTo = this.flyTo.bind(this)
     this.newRoute = this.newRoute.bind(this)
     this.addMarker = this.addMarker.bind(this)
-    this.handlesubmit = this.handlesubmit.bind(this)
+    this.handleSearchSubmit = this.handleSearchSubmit.bind(this)
     this.onStartTownChange = this.onStartTownChange.bind(this)
     this.onEndTownChange = this.onEndTownChange.bind(this)
 
   }
-  flyTo = function (coords) {
-      this.map.flyTo([55.8642, -4.2518]);
-  };
+
 
   addMarker = function (coords, text, markerToChange) {
     if(markerToChange === "marker"){
     if (this.state.marker !== []) {
       this.map.removeLayer(this.state.marker);
-      }
+        }
    this.setState({marker: L.marker(coords).addTo(this.map)
     .bindPopup(text, { autoClose: false }).openPopup()})
-  }
+    }
     if(markerToChange === "marker2"){
     if (this.state.marker2 !== []) {
       this.map.removeLayer(this.state.marker2);
       }
    this.setState({marker2: L.marker(coords).addTo(this.map)
     .bindPopup(text, { autoClose: false }).openPopup()})
+    }
   }
-}
 
 
 
-  handlesubmit = function(event){
+  handleSearchSubmit = function(event){
     event.preventDefault()
     let startPoint = this.state.startTown;
     let endPoint = this.state.endTown
@@ -75,10 +72,8 @@ export default class RoutePlanner extends Component {
       let startTown = JSON.parse(request.response);
        this.state.startLatLong = [startTown.latt, startTown.longt];
 
-
     })
     request.send()
-
 
     let endUrl = `https://geocode.xyz/${endPoint}-uk?json=1`
     console.log(endUrl);
@@ -90,8 +85,6 @@ export default class RoutePlanner extends Component {
        this.state.endLatLong = [endTown.latt, endTown.longt];
     })
     request2.send()
-
-
 
     setTimeout(() => {
       this.newRoute(this.state.startLatLong , this.state.endLatLong, "car", this.state.startTown, this.state.endTown);
@@ -130,11 +123,10 @@ export default class RoutePlanner extends Component {
 
   MapWrapper = function () {
     const osmLayer = new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
-   this.map  = L.map('map')
+    this.map  = L.map('map')
                  .addLayer(osmLayer)
                  .setView([55.9533, -3.1883], 5);
                  this.addMarker([55.9533, -3.1883], "Edinburgh Scotland's capital", "marker")
-
 
     }
 
@@ -149,7 +141,6 @@ export default class RoutePlanner extends Component {
       users: users
     }));
     setTimeout(() =>{console.log(this.state.users)}, 2000)
-
     this.MapWrapper()
   }
   render(){
@@ -158,7 +149,7 @@ export default class RoutePlanner extends Component {
           <h4>Route Planner</h4>
           <RouteList  newRoute={this.newRoute} routes={this.state.routes} />
           <UserList users={this.state.users}/>
-          <form  onSubmit={this.handlesubmit}>
+          <form  onSubmit={this.handleSearchSubmit}>
             <input type="text" placeholder="Start town" value={this.state.startTown} onChange={this.onStartTownChange}/>
             <input type="text" placeholder="End town" value={this.state.endTown} onChange={this.onEndTownChange}/>
             <input type="submit" value="New Route"/>
