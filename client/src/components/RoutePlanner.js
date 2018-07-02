@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
 import RouteList from './RouteList';
+import UserList from './UserList';
 import L from 'leaflet';
 import './Map.css';
 import './route-planner.css'
+// import Routing from 'leaflet-routing-machine';
+// import {MapLayer} from 'react-leaflet';
+require('os-leaflet'); 
 
-require('os-leaflet');
 
 require('leaflet-routing-machine');
 require('lrm-graphhopper');
@@ -16,6 +19,7 @@ export default class RoutePlanner extends Component {
     super(props);
     this.state= {
       routes: [],
+      users: [],
       been_routed: false,
       routing: '',
       marker: [],
@@ -144,8 +148,9 @@ export default class RoutePlanner extends Component {
 
   render(){
     return(
-      <div route-planner-div>
-          <h4>Route Planner</h4>
+
+      <div id='main-route-planner'>
+          <div id="map-box">
           <RouteList  newRoute={this.newRoute} routes={this.state.routes} />
           <select onChange={this.onTravelMethodChange}>
             <option value="foot" onclick={this.onTravelMethodChange}>Walking</option>
@@ -160,6 +165,7 @@ export default class RoutePlanner extends Component {
 
 
           <div id='map'/>
+      </div>
       </div>
     )
   }

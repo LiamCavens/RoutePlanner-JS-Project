@@ -1,0 +1,8 @@
+#route-list-div {
+  padding: 2% 0 2% 0;
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+  width: 25vw;
+  overflow: scroll;
+}
