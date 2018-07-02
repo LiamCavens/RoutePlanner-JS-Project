@@ -4,8 +4,6 @@ import UserList from './UserList';
 import L from 'leaflet';
 import './Map.css';
 import './route-planner.css'
-// import Routing from 'leaflet-routing-machine';
-// import {MapLayer} from 'react-leaflet';
 require('os-leaflet');
 
 
@@ -33,7 +31,7 @@ export default class RoutePlanner extends Component {
       usersRoute: "glasgow"
     }
 
-    this.MapWrapper = this.MapWrapper.bind(this)
+    this.mainMap = this.mainMap.bind(this)
     this.newRoute = this.newRoute.bind(this)
     this.addMarker = this.addMarker.bind(this)
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this)
@@ -63,26 +61,23 @@ export default class RoutePlanner extends Component {
     }
   }
 
+
     updateUser = (event) => {
       event.preventDefault()
       this.setState({user: event.target.value})
-
     }
 
     SearchForUser = (event) => {
       event.preventDefault()
-
 
       let component = this;
       this.state.apiUsers.forEach(function(userToSearch){
 
         if(userToSearch.name === component.state.user){
             component.setState({user: userToSearch})
-
         }
       })
-
-      }
+    }
 
 
   handleSearchSubmit = function(event){
@@ -170,7 +165,7 @@ export default class RoutePlanner extends Component {
 
     }
 
-  MapWrapper = function () {
+  mainMap = function () {
 
     const cycleLayer = new L.TileLayer("https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png")
     const osmLayer = new L.TileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
@@ -184,30 +179,22 @@ export default class RoutePlanner extends Component {
     }
 
   componentDidMount(){
-
-
     const userUrl = "/api/users";
-      fetch(userUrl).then(res => res.json()).then(users => this.setState({
-          apiUsers: users
-        }))
+    fetch(userUrl).then(res => res.json()).then(users => this.setState({
+    apiUsers: users}))
 
-        const url = "/api/routes";
-        fetch(url).then(res => res.json()).then(routes => this.setState({
-          routes: routes
-        }));
+    const url = "/api/routes";
+    fetch(url).then(res => res.json()).then(routes => this.setState({
+    routes: routes}))
 
-
-  this.MapWrapper()
+    this.mainMap()
   }
 
   render(){
     return(
       <div id='main-route-planner'>
 
-
-
-
-          <RouteList  newRoute={this.newRoute} routes={this.state.routes} users={this.state.apiUsers}/>
+      <RouteList  newRoute={this.newRoute} routes={this.state.routes} users={this.state.apiUsers}/>
 
         <div id="map-box">
           <div id='form-box'>
