@@ -1,6 +1,6 @@
 import React from "react";
 import "./westHighlandWay.css";
-import TextBox from "./TextBox.js"
+import TextBox from "./TextBox.js";
 
 const westHighlandWay = () => (
   <div>
@@ -10,7 +10,6 @@ const westHighlandWay = () => (
         Helping you to discover and explore the West Highland way
       </h5>
       <TextBox />
-
     </div>
   </div>
 );

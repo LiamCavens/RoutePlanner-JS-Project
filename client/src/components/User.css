@@ -30,3 +30,7 @@
   list-style: none;
   border: 1px solid black;
 }
+
+#user-logged-in {
+  text-align: center;
+}
