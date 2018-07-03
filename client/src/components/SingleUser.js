@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SingleUser = ({user, loggedInUser}) => {
+const SingleUser = ({user, loggedInUser, reloadApi}) => {
 
     this.handleClick = function(event){
       event.preventDefault()
@@ -13,7 +13,7 @@ const SingleUser = ({user, loggedInUser}) => {
           const responseBody = JSON.parse(this.response);
         })
         request.send(JSON.stringify(user));
-        window.location.reload();
+        reloadApi()
     }
 
 

@@ -89,7 +89,7 @@ export default class UserPage extends Component {
             <input type="submit" value="New users" />
           </form>
         </div>
-        <UserList users= {this.state.users} user={this.state.user}/>
+        <UserList users= {this.state.users} user={this.state.user} reloadApi={this.getUsersFromApi}/>
 
       </div>
     )
