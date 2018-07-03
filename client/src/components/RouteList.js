@@ -3,21 +3,20 @@ import SingleRoute from "./SingleRoute.js";
 import "./RouteList.css";
 
 export default class RouteList extends Component {
+
   constructor(props) {
     super(props);
     this.handleSaveRoute = this.handleSaveRoute.bind(this);
-
   }
 
-
   handleSaveRoute = event => {
-    event.preventDefault();
-    console.log(event.target.value);
+    event.preventDefault()
     this.props.user.routes.push({
       name: event.target.value,
       completed: "Not completed"
-    });
-    const request = new XMLHttpRequest();
+    })
+
+  const request = new XMLHttpRequest();
     request.open("PUT", "http://localhost:3001/api/users");
     request.setRequestHeader("content-type", "application/json");
     request.addEventListener("load", function() {
@@ -26,7 +25,7 @@ export default class RouteList extends Component {
     });
     request.send(JSON.stringify(this.props.user));
     alert("Your route has been saved")
-  };
+  }
 
   render() {
     const routes = this.props.routes.map(route => {
