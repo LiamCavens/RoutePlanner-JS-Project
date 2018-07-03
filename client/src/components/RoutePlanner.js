@@ -64,7 +64,8 @@ export default class RoutePlanner extends Component {
 
     updateUser = (event) => {
       event.preventDefault()
-      this.setState({user: event.target.value})
+      this.props.changeUser(event.target.value)
+
     }
 
     SearchForUser = (event) => {
@@ -74,7 +75,8 @@ export default class RoutePlanner extends Component {
       this.state.apiUsers.forEach(function(userToSearch){
 
         if(userToSearch.name === component.state.user){
-            component.setState({user: userToSearch})
+            component.props.changeUser(userToSearch)
+
         }
       })
     }
@@ -196,6 +198,11 @@ export default class RoutePlanner extends Component {
     routes: routes}))
 
     this.mainMap()
+    this.setState({user: this.props.loggedInUser});
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({user: nextProps.loggedInUser})
   }
 
   render(){
