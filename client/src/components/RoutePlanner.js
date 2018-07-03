@@ -199,10 +199,19 @@ export default class RoutePlanner extends Component {
   }
 
   render(){
+
+      const user = this.state.user
+      let saveARoute;
+      if(user.name !== undefined){
+      saveARoute =  <form onSubmit={this.handleSaveRoute}>
+      <input type="text" value={this.state.usersRoute.name}/>
+      <input type="submit" value="Save Route" />
+    </form>}
+
     return(
       <div id='main-route-planner'>
 
-      <RouteList  newRoute={this.newRoute} routes={this.state.routes} users={this.state.apiUsers}/>
+      <RouteList  newRoute={this.newRoute} user={this.state.user} routes={this.state.routes} users={this.state.apiUsers}/>
 
         <div id="map-box">
           <div id='form-box'>
@@ -224,13 +233,11 @@ export default class RoutePlanner extends Component {
             </form>
             <form  onSubmit={this.SearchForUser}>
               <input type="text" placeholder="Username"  onChange={this.updateUser} />
-              <input type="submit" value="Find user"/>
+              <input type="submit" value="Login"/>
               </form>
               <p>{this.state.user.name}</p>
-            <form onSubmit={this.handleSaveRoute}>
-              <input type="text" value={this.state.usersRoute.name}/>
-              <input type="submit" value="Save Route" />
-            </form>
+
+            {saveARoute}
           </div>
 
           <div id="map" />
