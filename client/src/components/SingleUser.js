@@ -15,11 +15,15 @@ const SingleUser = ({user}) => {
         request.send(JSON.stringify(user));
         window.location.reload();
     }
-      console.log(user);
-    const routeNames = user.routes.map((route, index) =>
 
-    <p>{route.name}-{route.completed}<button value={index} onClick={this.handleClick}>Complete</button></p>
-  )
+ 
+    let routeNames = user.routes.map((route, index) => {
+    if(route.completed !== "Completed"){
+      return <p>{route.name}-{route.completed}
+    <button value={index} onClick={this.handleClick}>Complete</button></p>}
+    else{ return <p>{route.name}-{route.completed}</p>}
+    })
+
   return(
     <div className='user-div' >
       <p>{user.name}</p>
