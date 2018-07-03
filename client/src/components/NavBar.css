@@ -1,6 +1,5 @@
 #navbar {
     width: 100vw;
-    height: 20vh;
     background-image: url(https://www.scotlandinfo.eu/wp-content/themes/magazine-pro/images/header.jpg);
     background-size: cover;
     margin: 0;
@@ -14,6 +13,11 @@ h1 {
     padding: 2% 0 0 2%;
     font-family: 'IM Fell English SC', serif;
     text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff;
+}
+
+#route-link {
+    min-width: 125px;
+    max-height: 31px;
 }
 
 #nav-bar-list {
@@ -35,6 +39,7 @@ li {
 
 li a {
     border-radius: 8% 8% 8% 8%;
+    max-height: 31px;
     text-decoration: none;
     background-color: whitesmoke;
     padding: 6px 12px;
