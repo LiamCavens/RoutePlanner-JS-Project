@@ -33,7 +33,6 @@ MongoClient.connect(
 
     app.post("/api/routes", (req, res, next) => {
       const routesCollection = db.collection("routes");
-      console.log(req.body);
       const newRoute = req.body;
       routesCollection.insert(newRoute, (err, result) => {
         if (err) next(err);
@@ -50,6 +49,16 @@ MongoClient.connect(
       });
     });
 
+      app.post("/api/users", (req, res, next) => {
+      const userCollection = db.collection("users");
+      const newUser = req.body;
+      userCollection.insert(newUser, (err, result) => {
+      if (err) next(err);
+      res.status(201);
+      res.json(result.ops[0]);
+      });
+    });
+
 
 
     app.put("/api/users", function(req, res){
@@ -63,16 +72,6 @@ MongoClient.connect(
         });
       })
 
-      app.post("/api/users", (req, res, next) => {
-          const userCollection = db.collection("users");
-          console.log(req.body);
-          const newUser = req.body;
-          userCollection.update(newUser, (err, result) => {
-            if (err) next(err);
-            res.status(201);
-            res.json(result.ops[0]);
-          });
-        });
 
 
 
