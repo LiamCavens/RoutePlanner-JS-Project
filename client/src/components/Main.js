@@ -11,8 +11,14 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-                state: ''
+                state: '',
+                pageLoggedInUser: "hi"
         }
+        this.changeLoggedInUser = this.changeLoggedInUser.bind(this)
+    }
+
+    changeLoggedInUser = (user) => {
+      this.setState({pageLoggedInUser: user})
     }
 
     render() {
@@ -21,12 +27,15 @@ class Main extends Component {
                 <React.Fragment>
                     <NavBar />
 
-                    <Route exact path='/' component={Home} />
-                    <Route path='/about' component={About} />
-                    <Route path='/users' component={UserPage} />
-                    <Route path='/route-planner' component={RoutePlanner} />
+                    <Route exact path='/'
+                    render={() => <Home loggedInUser={this.state.pageLoggedInUser} changeUser={this.changeLoggedInUser}/>}/>
+                    <Route path='/about'
+                    render={() => <About loggedInUser={this.state.pageLoggedInUser} changeUser={this.changeLoggedInUser}/>}/>
+                    <Route path='/users'
+                    render={() => <UserPage loggedInUser={this.state.pageLoggedInUser} changeUser={this.changeLoggedInUser}/>} />
+                    <Route path='/route-planner'
+                    render={() => <RoutePlanner loggedInUser={this.state.pageLoggedInUser} changeUser={this.changeLoggedInUser}/>} />
                     <Route path='/west-highland-way' component={westHighlandWay}/>
-
 
                 </React.Fragment>
             </Router>

@@ -9,7 +9,7 @@ export default class UserPage extends Component {
     this.state= {
       users: [],
       newUserName: "",
-      user: []
+      user: ""
     }
     this.handleNewUser = this.handleNewUser.bind(this);
     this.newUserName = this.newUserName.bind(this);
@@ -30,7 +30,7 @@ export default class UserPage extends Component {
     })
     let newUsersname = this.state.newUserName;
     let newUserObject = {name: newUsersname, routes: []}
-    this.setState({user:newUserObject})
+    this.props.changeUser(newUserObject)
 
     request.send(JSON.stringify(newUserObject));
     setTimeout( () =>{this.getUsersFromApi()}, 1000)
@@ -38,10 +38,9 @@ export default class UserPage extends Component {
 
   }
 
-
       updateUser = (event) => {
         event.preventDefault()
-        this.setState({user: event.target.value})
+        this.props.changeUser(event.target.value)
       }
 
       SearchForUser = (event) => {
@@ -51,7 +50,8 @@ export default class UserPage extends Component {
         this.state.users.forEach(function(userToSearch){
 
           if(userToSearch.name === component.state.user){
-              component.setState({user: userToSearch})
+              component.props.changeUser(userToSearch)
+
           }
         })
       }
@@ -70,10 +70,16 @@ export default class UserPage extends Component {
 
   componentDidMount(){
     this.getUsersFromApi();
+    this.setState({user: this.props.loggedInUser});
+  }
 
-
+  componentWillReceiveProps(nextProps){
+    this.setState({user: nextProps.loggedInUser})
 
   }
+
+
+
   render(){
     return(
       <div id='user-background'>
