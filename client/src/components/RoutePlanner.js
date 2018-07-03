@@ -41,6 +41,7 @@ export default class RoutePlanner extends Component {
     this.handleSaveRoute = this.handleSaveRoute.bind(this)
     this.updateUser = this.updateUser.bind(this)
     this.SearchForUser = this.SearchForUser.bind(this)
+    this.handleLogout = this.handleLogout.bind(this)
 
   }
 
@@ -81,6 +82,9 @@ export default class RoutePlanner extends Component {
       })
     }
 
+    handleLogout = (event) => {
+      this.props.changeUser("")
+    }
 
   handleSearchSubmit = function(event){
     event.preventDefault()
@@ -211,10 +215,25 @@ export default class RoutePlanner extends Component {
      const user = this.state.user
       let saveARoute;
      if(user.name !== undefined){
-      saveARoute =  <form onSubmit={this.handleSaveRoute}>
+      saveARoute =
+      <div id="loggin-route">
+
+        <p>Logged in: {this.state.user.name}</p>
+        <button onClick={this.handleLogout}>Logout</button>
+       <form onSubmit={this.handleSaveRoute}>
+
      <input type="text" value={this.state.usersRoute.name}/>
       <input type="submit" value="Save Route" />
-    </form>}
+    </form>
+    </div>}
+
+    if(user.name === undefined){
+      saveARoute =
+      <form  onSubmit={this.SearchForUser}>
+        <input type="text" placeholder="Username"  onChange={this.updateUser} />
+        <input type="submit" value="Login"/>
+        </form>
+    }
 
     return(
       <div id='main-route-planner'>
@@ -239,15 +258,10 @@ export default class RoutePlanner extends Component {
               <input type="text" placeholder="End town" value={this.state.endTown} onChange={this.onEndTownChange} />
               <input type="submit" value="New Route" />
             </form>
-            <form  onSubmit={this.SearchForUser}>
-              <input type="text" placeholder="Username"  onChange={this.updateUser} />
-              <input type="submit" value="Login"/>
-              </form>
-              <p>{this.state.user.name}</p>
-            <form onSubmit={this.handleSaveRoute}>
-              <input type="text" value={this.state.usersRoute.name}/>
-              <input type="submit" value="Save Route" />
-            </form>
+
+
+              {saveARoute}
+
           </div>
 
           <div id="map" />

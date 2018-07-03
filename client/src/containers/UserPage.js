@@ -16,7 +16,12 @@ export default class UserPage extends Component {
     this.updateUser = this.updateUser.bind(this);
     this.SearchForUser = this.SearchForUser.bind(this);
     this.getUsersFromApi = this.getUsersFromApi.bind(this);
+    this.getUsersFromApi = this.getUsersFromApi.bind(this);
 
+  }
+
+  handleLogout = (event) => {
+    this.props.changeUser("")
   }
 
   handleNewUser = (event) => {
@@ -81,20 +86,43 @@ export default class UserPage extends Component {
 
 
   render(){
+
+         const user = this.state.user
+          let userLogin;
+          console.log(user.name);
+         if(user.name === undefined){
+           userLogin =
+            <div id="form-container">
+
+           <form  onSubmit={this.SearchForUser}>
+             <p>Login</p>
+             <input type="text" placeholder="Username"  onChange={this.updateUser} />
+             <input type="submit" value="Login"/>
+             </form>
+
+           <form onSubmit={this.handleNewUser}>
+             <p>Create Account</p>
+             <input type="text" placeholder="Username" onChange={this.newUserName}/>
+             <input type="submit" value="New users" />
+           </form>
+
+         </div>}
+
+         if(user.name !== undefined){ 
+           userLogin =
+           <div id="user-logged-in">
+            <p>Logged in : {this.state.user.name}</p>
+           <button onClick={this.handleLogout}>Logout</button>
+         </div>
+         }
+
+
+
     return(
       <div id='user-background'>
           <h3 id='users-header'>Users</h3>
-          <div id="form-container">
-          <form  onSubmit={this.SearchForUser}>
-            <input type="text" placeholder="Username"  onChange={this.updateUser} />
-            <input type="submit" value="Find user"/>
-            </form>
-            <p>{this.state.user.name}</p>
-          <form onSubmit={this.handleNewUser}>
-            <input type="text" placeholder="Username" onChange={this.newUserName}/>
-            <input type="submit" value="New users" />
-          </form>
-        </div>
+
+          {userLogin}
         <UserList users= {this.state.users} user={this.state.user} reloadApi={this.getUsersFromApi}/>
 
       </div>
