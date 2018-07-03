@@ -48,8 +48,9 @@ export default class RouteList extends Component {
   };
 
   render() {
-    const routes = this.props.routes.map(route => (
-      <li key={route._id}>
+    const routes = this.props.routes.map(route => {
+      if(this.state.user.name !== undefined)
+      {return (<li key={route._id}>
         <SingleRoute route={route} />{" "}
         <button
           onClick={() =>
@@ -72,12 +73,41 @@ export default class RouteList extends Component {
           />
           <input type="submit" value="Find user" />
         </form>
+
         <button value={route.name} onClick={this.handleSaveRoute}>
           Save this route
         </button>
+
         <p id="username">{this.state.user.name}</p>
-      </li>
-    ));
+      </li>)}
+      if(this.state.user.name === undefined)
+      {return (<li key={route._id}>
+        <SingleRoute route={route} />{" "}
+        <button
+          onClick={() =>
+            this.props.newRoute(
+              route.startPoint,
+              route.endPoint,
+              route.travelMethod,
+              route.startTown,
+              route.endTown
+            )
+          }
+        >
+          View this Route
+        </button>
+        <form onSubmit={this.SearchForUser}>
+          <input
+            type="text"
+            placeholder="Username"
+            onChange={this.updateUser}
+          />
+          <input type="submit" value="Find user" />
+        </form>
+
+        <p id="username">Log in to save Route</p>
+      </li>)}
+    });
     return (
       <div id="route-list-div">
         <h3 id="list-header-h3">Recommended Routes</h3>
