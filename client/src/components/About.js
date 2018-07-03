@@ -8,7 +8,9 @@ const About = () => (
       <h5 id="about-sub-head">
         Helping you to discover and explore the real Scotland
       </h5>
-      <p id="message-about">{`Walking can be dangerous and is done entirely at your own risk. Information is provided free of charge; it is each walker's responsibility to check it and navigate using a map and compass.`}</p>
+      <div id="p-container">
+        <p id="message-about">{`Walking can be dangerous and is done entirely at your own risk. Information is provided free of charge; it is each walker's responsibility to check it and navigate using a map and compass.`}</p>
+      </div>
 
       <iframe
         id="about-video"
