@@ -9,7 +9,7 @@ const NavBar = () => (
       <li>
         <Link to="/">Home</Link>
       </li>
-      <li>
+      <li id='route-link'>
         <Link to="/route-planner">Route Planner</Link>
       </li>
       <li>
