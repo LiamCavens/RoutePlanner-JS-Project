@@ -20,6 +20,7 @@
 #user-background {
   background-image: url(https://www.historic-uk.com/wp-content/uploads/2017/01/scottish-highlands.jpg);
   background-size: cover;
+  padding: 0 0 15% 0;
 }
 
 #list-of-users {
