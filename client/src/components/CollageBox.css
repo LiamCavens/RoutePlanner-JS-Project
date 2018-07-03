@@ -2,6 +2,7 @@
     width: 100vw;
     height: 80vh;
     display: grid;
+    margin: 0 0 1% 0;
     grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
     grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
 }
