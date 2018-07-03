@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-
 import UserList from '../components/UserList';
+import '../components/User.css';
 
 export default class UserPage extends Component {
 
@@ -76,8 +76,9 @@ export default class UserPage extends Component {
   }
   render(){
     return(
-      <div >
-          <h4>Users</h4>
+      <div id='user-background'>
+          <h3 id='users-header'>Users</h3>
+          <div id="form-container">
           <form  onSubmit={this.SearchForUser}>
             <input type="text" placeholder="Username"  onChange={this.updateUser} />
             <input type="submit" value="Find user"/>
@@ -87,6 +88,7 @@ export default class UserPage extends Component {
             <input type="text" placeholder="Username" onChange={this.newUserName}/>
             <input type="submit" value="New users" />
           </form>
+        </div>
         <UserList users= {this.state.users} user={this.state.user}/>
 
       </div>

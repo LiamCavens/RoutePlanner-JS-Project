@@ -10,7 +10,7 @@ export default class UserList extends Component {
       <li key={index}><SingleUser user={user} loggedInUser={this.props.user}/></li>
       ))
       return(
-        <ul>
+        <ul id='list-of-users'>
           {usersList}
         </ul>
       )

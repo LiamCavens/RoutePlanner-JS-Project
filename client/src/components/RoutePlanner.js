@@ -180,7 +180,7 @@ export default class RoutePlanner extends Component {
     this.map  = L.map('map')
                  .addLayer(osmLayer)
                  .setView([55.9533, -3.1883], 5);
-                 this.addMarker([55.9533, -3.1883], "Edinburgh Scotland's capital", "marker")
+                 this.addMarker([55.9533, -3.1883], "Edinburgh, Scotland's capital", "marker")
                  this.map.addLayer(cycleLayer)
                  this.map.addLayer(hikeLayer)
                  L.control.layers(null, overlayMaps).addTo(this.map)
@@ -199,19 +199,10 @@ export default class RoutePlanner extends Component {
   }
 
   render(){
-
-      const user = this.state.user
-      let saveARoute;
-      if(user.name !== undefined){
-      saveARoute =  <form onSubmit={this.handleSaveRoute}>
-      <input type="text" value={this.state.usersRoute.name}/>
-      <input type="submit" value="Save Route" />
-    </form>}
-
     return(
       <div id='main-route-planner'>
 
-      <RouteList  newRoute={this.newRoute} user={this.state.user} routes={this.state.routes} users={this.state.apiUsers}/>
+      <RouteList  newRoute={this.newRoute} routes={this.state.routes} users={this.state.apiUsers}/>
 
         <div id="map-box">
           <div id='form-box'>
@@ -233,11 +224,13 @@ export default class RoutePlanner extends Component {
             </form>
             <form  onSubmit={this.SearchForUser}>
               <input type="text" placeholder="Username"  onChange={this.updateUser} />
-              <input type="submit" value="Login"/>
+              <input type="submit" value="Find user"/>
               </form>
               <p>{this.state.user.name}</p>
-
-            {saveARoute}
+            <form onSubmit={this.handleSaveRoute}>
+              <input type="text" value={this.state.usersRoute.name}/>
+              <input type="submit" value="Save Route" />
+            </form>
           </div>
 
           <div id="map" />
