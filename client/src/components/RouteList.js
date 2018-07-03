@@ -32,7 +32,7 @@ export default class RouteList extends Component {
     const routes = this.props.routes.map(route => {
       if(this.props.user.name !== undefined)
       {return (<li key={route._id}>
-        <SingleRoute route={route} />{" "}
+        <SingleRoute route={route} />
         <button
           onClick={() =>
             this.props.newRoute(
