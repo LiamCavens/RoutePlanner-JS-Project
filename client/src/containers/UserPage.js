@@ -15,6 +15,7 @@ export default class UserPage extends Component {
     this.newUserName = this.newUserName.bind(this);
     this.updateUser = this.updateUser.bind(this);
     this.SearchForUser = this.SearchForUser.bind(this);
+    this.getUsersFromApi = this.getUsersFromApi.bind(this);
 
   }
 
@@ -28,8 +29,12 @@ export default class UserPage extends Component {
       const responseBody = JSON.parse(this.response);
     })
     let newUsersname = this.state.newUserName;
-    request.send(JSON.stringify({name: newUsersname, routes: []}));
-     window.location.reload();
+    let newUserObject = {name: newUsersname, routes: []}
+    this.setState({user:newUserObject})
+
+    request.send(JSON.stringify(newUserObject));
+    setTimeout( () =>{this.getUsersFromApi()}, 1000)
+
 
   }
 
@@ -57,13 +62,16 @@ export default class UserPage extends Component {
     this.setState({newUserName: event.target.value})
 
   }
+  getUsersFromApi = () => {
+  const userUrl = "/api/users";
+  fetch(userUrl).then(res => res.json()).then(users => this.setState({
+    users: users
+  }))}
 
   componentDidMount(){
+    this.getUsersFromApi();
 
-    const userUrl = "/api/users";
-    fetch(userUrl).then(res => res.json()).then(users => this.setState({
-      users: users
-    }));
+
 
   }
   render(){
