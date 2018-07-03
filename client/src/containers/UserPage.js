@@ -8,10 +8,14 @@ export default class UserPage extends Component {
     super(props);
     this.state= {
       users: [],
-      newUserName: ""
+      newUserName: "",
+      user: []
     }
     this.handleNewUser = this.handleNewUser.bind(this);
     this.newUserName = this.newUserName.bind(this);
+    this.updateUser = this.updateUser.bind(this);
+    this.SearchForUser = this.SearchForUser.bind(this);
+
   }
 
   handleNewUser = (event) => {
@@ -25,10 +29,28 @@ export default class UserPage extends Component {
     })
     let newUsersname = this.state.newUserName;
     request.send(JSON.stringify({name: newUsersname, routes: []}));
-
      window.location.reload();
 
   }
+
+
+      updateUser = (event) => {
+        event.preventDefault()
+        this.setState({user: event.target.value})
+      }
+
+      SearchForUser = (event) => {
+        event.preventDefault()
+
+        let component = this;
+        this.state.users.forEach(function(userToSearch){
+
+          if(userToSearch.name === component.state.user){
+              component.setState({user: userToSearch})
+          }
+        })
+      }
+
 
   newUserName = (event) => {
     event.preventDefault()
@@ -48,11 +70,16 @@ export default class UserPage extends Component {
     return(
       <div >
           <h4>Users</h4>
+          <form  onSubmit={this.SearchForUser}>
+            <input type="text" placeholder="Username"  onChange={this.updateUser} />
+            <input type="submit" value="Find user"/>
+            </form>
+            <p>{this.state.user.name}</p>
           <form onSubmit={this.handleNewUser}>
             <input type="text" placeholder="Username" onChange={this.newUserName}/>
             <input type="submit" value="New users" />
           </form>
-        <UserList users= {this.state.users}/>
+        <UserList users= {this.state.users} user={this.state.user}/>
 
       </div>
     )

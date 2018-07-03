@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SingleUser = ({user}) => {
+const SingleUser = ({user, loggedInUser}) => {
 
     this.handleClick = function(event){
       event.preventDefault()
@@ -16,9 +16,9 @@ const SingleUser = ({user}) => {
         window.location.reload();
     }
 
- 
+
     let routeNames = user.routes.map((route, index) => {
-    if(route.completed !== "Completed"){
+    if(route.completed !== "Completed" && loggedInUser.name === user.name){
       return <p>{route.name}-{route.completed}
     <button value={index} onClick={this.handleClick}>Complete</button></p>}
     else{ return <p>{route.name}-{route.completed}</p>}
