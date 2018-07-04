@@ -7,14 +7,7 @@ db.users.remove({});
 db.users.insert([
   {
   name: "Paul",
-  routes: [
-    {
-    name: "West Highland Way",
-    startPoint:[55.9411,-4.318 ],
-    endPoint: [56.8198, -5.1052],
-    completed: "Still to complete"
-  }
-]
+  routes: []
   },
   {
   name: "Dragon",
