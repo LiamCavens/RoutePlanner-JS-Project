@@ -3,6 +3,22 @@
   display: flex;
 }
 
+#login-route {
+  display: inline;
+  font-size: 12px;
+  font-family: 'Raleway', sans-serif;
+}
+
+#logged-in-line{
+  margin: 0;
+  padding: 0 8px 0 0;
+}
+
+#dest-forms {
+  display: flex;
+  flex-direction: column;
+}
+
 
 #route-form {
   padding: 15px;
