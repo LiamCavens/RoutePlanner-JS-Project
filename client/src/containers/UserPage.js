@@ -15,15 +15,24 @@ export default class UserPage extends Component {
     this.updateUser = this.updateUser.bind(this);
     this.SearchForUser = this.SearchForUser.bind(this);
     this.getUsersFromApi = this.getUsersFromApi.bind(this);
-    this.getUsersFromApi = this.getUsersFromApi.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.userAlreadyExists = this.userAlreadyExists.bind(this);
   }
 
   handleLogout = event => {
     this.props.changeUser("");
   };
 
+  userAlreadyExists = (name) => {
+    return this.state.users.some(elem =>{
+      return JSON.stringify(name) === JSON.stringify(elem.name);
+    });
+
+  }
+
   handleNewUser = event => {
     event.preventDefault();
+    if(!this.userAlreadyExists(this.state.newUserName)){
     const request = new XMLHttpRequest();
     request.open("POST", "http://localhost:3001/api/users");
     request.setRequestHeader("content-type", "application/json");
@@ -38,7 +47,8 @@ export default class UserPage extends Component {
     request.send(JSON.stringify(newUserObject));
     setTimeout(() => {
       this.getUsersFromApi();
-    }, 1000);
+    }, 1000);}
+    else(alert("User already exists"))
   };
 
   updateUser = event => {
@@ -75,6 +85,8 @@ export default class UserPage extends Component {
   componentDidMount() {
     this.getUsersFromApi();
     this.setState({ user: this.props.loggedInUser });
+    setTimeout(() =>  {console.log(this.state.users)}, 1000)
+    setTimeout(() => {console.log(this.userAlreadyExists("Paul"))}, 2000)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -84,7 +96,6 @@ export default class UserPage extends Component {
   render() {
     const user = this.state.user;
     let userLogin;
-    console.log(user.name);
     if (user.name === undefined) {
       userLogin = (
         <div id="form-container">
