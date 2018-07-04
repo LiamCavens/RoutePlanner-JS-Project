@@ -85,8 +85,7 @@ export default class UserPage extends Component {
   componentDidMount() {
     this.getUsersFromApi();
     this.setState({ user: this.props.loggedInUser });
-    setTimeout(() =>  {console.log(this.state.users)}, 1000)
-    setTimeout(() => {console.log(this.userAlreadyExists("Paul"))}, 2000)
+  
   }
 
   componentWillReceiveProps(nextProps) {

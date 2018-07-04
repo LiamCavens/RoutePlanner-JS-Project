@@ -6,14 +6,29 @@ export default class RouteList extends Component {
   constructor(props) {
     super(props);
     this.handleSaveRoute = this.handleSaveRoute.bind(this);
+    this.checkIfUserHasRouteInList = this.checkIfUserHasRouteInList.bind(this);
   }
+
+
+    checkIfUserHasRouteInList = (route) => {
+      var result = null
+       this.props.user.routes.map(function (userRoute){
+
+          if(route === userRoute.name){
+                 result = true;
+            }
+          })
+      return result
+    }
 
   handleSaveRoute = event => {
     event.preventDefault();
+    if(!this.checkIfUserHasRouteInList(event.target.value)){
     this.props.user.routes.push({
       name: event.target.value,
       completed: "Not completed"
     });
+
 
     const request = new XMLHttpRequest();
     request.open("PUT", "http://localhost:3001/api/users");
@@ -23,7 +38,10 @@ export default class RouteList extends Component {
       const responseBody = JSON.parse(this.response);
     });
     request.send(JSON.stringify(this.props.user));
-    alert("Your route has been saved");
+    alert("Your route has been saved");}
+    else{alert("You've already added this route")}
+
+
   };
 
   render() {
