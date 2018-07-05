@@ -12,14 +12,58 @@ class Main extends Component {
     super(props);
     this.state = {
       state: "",
-      pageLoggedInUser: "hi"
+      pageLoggedInUser: "",
+      users:''
     };
     this.changeLoggedInUser = this.changeLoggedInUser.bind(this);
+    this.userLogOut = this.userLogOut.bind(this);
+    this.searchForUser = this.searchForUser.bind(this);
+    this.updateUser = this.updateUser.bind(this);
   }
+
+
+    componentDidMount() {
+      const userUrl = "/api/users";
+      fetch(userUrl)
+        .then(res => res.json())
+        .then(users =>
+          this.setState({
+            users: users
+          })
+        );
+    }
+
+      updateUser = event => {
+        event.preventDefault();
+        this.setState({pageLoggedInUser: event.target.value});
+        console.log(this.state.pageLoggedInUser);
+      };
+
+
+    searchForUser = event => {
+      event.preventDefault();
+
+      let component = this;
+      if (this.state.users.some(elem =>{
+            return JSON.stringify(component.state.pageLoggedInUser) === JSON.stringify(elem.name);
+          })){
+      this.state.users.forEach(function(userToSearch) {
+        if (userToSearch.name === component.state.pageLoggedInUser) {
+          component.changeLoggedInUser(userToSearch);
+        }
+      })
+    }
+      else{alert("User not found")
+      }
+    };
 
   changeLoggedInUser = user => {
     this.setState({ pageLoggedInUser: user });
   };
+
+  userLogOut = () => {
+    this.setState({pageLoggedInUser: ""})
+  }
 
   render() {
     return (
@@ -34,6 +78,9 @@ class Main extends Component {
               <Home
                 loggedInUser={this.state.pageLoggedInUser}
                 changeUser={this.changeLoggedInUser}
+                userLogOut={this.userLogOut}
+                updateUser={this.updateUser}
+                searchForUser={this.searchForUser}
               />
             )}
           />
