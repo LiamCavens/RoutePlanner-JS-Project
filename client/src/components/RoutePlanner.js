@@ -41,6 +41,7 @@ export default class RoutePlanner extends Component {
     this.updateUser = this.updateUser.bind(this)
     this.SearchForUser = this.SearchForUser.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
+    this.updateUsersRoute = this.updateUsersRoute.bind(this)
   }
 
   addMarker = function(coords, text, markerToChange) {
@@ -68,6 +69,11 @@ export default class RoutePlanner extends Component {
     }
   };
 
+  updateUsersRoute = (event) => {
+    event.preventDefault()
+    this.setState({usersRoute: {name: event.target.value}})
+  }
+
   updateUser = event => {
     event.preventDefault();
     this.props.changeUser(event.target.value);
@@ -77,11 +83,16 @@ export default class RoutePlanner extends Component {
     event.preventDefault();
 
     let component = this;
+    if (this.state.apiUsers.some(elem =>{
+          return JSON.stringify(component.state.user) === JSON.stringify(elem.name);
+        })){
     this.state.apiUsers.forEach(function(userToSearch) {
       if (userToSearch.name === component.state.user) {
         component.props.changeUser(userToSearch);
       }
-    });
+    })
+  }
+    else{alert("User not found")}
   };
 
   handleLogout = event => {
@@ -138,7 +149,6 @@ export default class RoutePlanner extends Component {
 
   handleSaveRoute = event => {
     event.preventDefault();
-    console.log(event.target.value);
     this.state.user.routes.push(this.state.usersRoute);
     const request = new XMLHttpRequest();
     request.open("PUT", "http://localhost:3001/api/users");
@@ -274,7 +284,8 @@ export default class RoutePlanner extends Component {
           </p>
 
           <form onSubmit={this.handleSaveRoute}>
-            <input type="text" value={this.state.usersRoute.name} />
+            <p>Custom Route Name</p>
+            <input type="text" defaultValue={this.state.usersRoute.name} onChange={this.updateUsersRoute}/>
             <input type="submit" value="Save Route" />
           </form>
         </div>
